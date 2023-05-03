@@ -1,9 +1,9 @@
-from arekit.common.evaluation.evaluators.utils import label_to_str, check_is_supported
 from arekit.common.opinions.base import Opinion
 from arekit.common.opinions.collection import OpinionCollection
 
 from arekit_eval.core.comparators.base import BaseComparator
 from arekit_eval.core.evaluators.modes import EvaluationModes
+from arekit_eval.core.evaluators.utils import check_is_supported, label_to_str
 
 
 class OpinionBasedComparator(BaseComparator):

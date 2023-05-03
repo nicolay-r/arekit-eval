@@ -1,7 +1,8 @@
 import pandas as pd
 
-from arekit.common.evaluation.evaluators.utils import label_to_str
 from arekit.common.labels.base import Label
+
+from arekit_eval.core.evaluators.utils import label_to_str
 
 
 class DocumentCompareTable:
