@@ -2,11 +2,11 @@ import collections
 
 from arekit.common.pipeline.context import PipelineContext
 from arekit.common.pipeline.items.base import BasePipelineItem
-from arekit.common.utils import progress_bar_iter
 from arekit.contrib.utils.utils_folding import folding_iter_states
 
 from arekit_eval.core.evaluators.base import BaseEvaluator
 from arekit_eval.core.result import BaseEvalResult
+from arekit_eval.core.utils import progress_bar_iter
 from arekit_eval.evaluation.iterators import DataPairsIterators
 
 

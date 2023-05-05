@@ -9,7 +9,6 @@ from arekit.common.labels.base import Label
 from arekit.common.opinions.collection import OpinionCollection
 from arekit.common.synonyms.base import SynonymsCollection
 from arekit.common.text.stemmer import Stemmer
-from arekit.common.utils import progress_bar_iter
 from arekit.contrib.source.rusentrel.const import POS_LABEL_STR, NEG_LABEL_STR
 from arekit.contrib.source.rusentrel.io_utils import RuSentRelVersions
 from arekit.contrib.source.rusentrel.labels_fmt import RuSentRelLabelsFormatter
@@ -23,6 +22,7 @@ from arekit.contrib.utils.synonyms.stemmer_based import StemmerBasedSynonymColle
 from arekit_eval.core.comparators.opinions import OpinionBasedComparator
 from arekit_eval.core.evaluators.cmp_table import DocumentCompareTable
 from arekit_eval.core.evaluators.modes import EvaluationModes
+from arekit_eval.core.utils import progress_bar_iter
 from arekit_eval.evaluation.evaluators.two_class import TwoClassEvaluator
 from arekit_eval.evaluation.iterators import DataPairsIterators
 from arekit_eval.evaluation.results.two_class_prf import TwoClassEvalPrecRecallF1Result
