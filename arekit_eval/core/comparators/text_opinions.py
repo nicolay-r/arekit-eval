@@ -1,8 +1,7 @@
-from arekit.common.evaluation.context_opinion import ContextOpinion
-from arekit.common.evaluation.evaluators.modes import EvaluationModes
-from arekit.common.evaluation.evaluators.utils import check_is_supported, label_to_str
-
 from arekit_eval.core.comparators.base import BaseComparator
+from arekit_eval.core.context_opinion import ContextOpinion
+from arekit_eval.core.evaluators.modes import EvaluationModes
+from arekit_eval.core.evaluators.utils import check_is_supported, label_to_str
 
 
 class TextOpinionBasedComparator(BaseComparator):
