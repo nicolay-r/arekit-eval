@@ -1,8 +1,6 @@
 import pandas as pd
 
 from arekit.common.labels.base import NoLabel
-from arekit.contrib.utils.data.readers.csv_pd import PandasCsvReader
-from arekit.contrib.utils.data.storages.pandas_based import PandasBasedRowsStorage
 
 from arekit_eval.core.evaluators.cmp_table import DocumentCompareTable
 from arekit_eval.core.evaluators.utils import label_to_str
@@ -11,6 +9,8 @@ from arekit_eval.core.utils import progress_bar_defined
 
 
 # Corresponds to fields with attitude ends. (indices, INT)
+from arekit_eval.utils_pd import read_csv
+
 S_IND = 's_ind'
 T_IND = 't_ind'
 # Provide sentence index.
@@ -81,9 +81,8 @@ def __crop_text_terms(source_ind, target_ind, text_terms, window_crop=10):
     return " ".join(text_terms[crop_left:crop_right])
 
 
-def __extract_df(storage, doc_id, ctx_id, source_ind, target_ind):
-    assert(isinstance(storage, PandasBasedRowsStorage))
-    df = storage.DataFrame
+def __extract_df(df, doc_id, ctx_id, source_ind, target_ind):
+    assert(isinstance(df, pd.DataFrame))
     return df[(df[DOC_ID] == doc_id) &
               (df[SENT_IND] == ctx_id) &
               (df[S_IND] == source_ind) &
@@ -122,9 +121,8 @@ def extract_errors(eval_result, test_samples_filepath, etalon_samples_filepath, 
         eval_errors_df.insert(last_column_index, sample_col, [""] * len(eval_errors_df), allow_duplicates=True)
 
     # Дополняем содержимым из samples строки с неверно размеченными оценками.
-    reader = PandasCsvReader()
-    etalon_samples = reader.read(target=etalon_samples_filepath)
-    test_samples = reader.read(target=test_samples_filepath)
+    etalon_samples_df = read_csv(etalon_samples_filepath)
+    test_samples_df = read_csv(test_samples_filepath)
 
     eval_rows_it = progress_bar_defined(iterable=eval_errors_df.iterrows(),
                                         total=len(eval_errors_df),
@@ -136,11 +134,11 @@ def extract_errors(eval_result, test_samples_filepath, etalon_samples_filepath, 
         doc_id, ctx_id, source_ind, target_ind = [
             int(v) for v in eval_row[DocumentCompareTable.C_ID_ORIG].split("_")]
 
-        sample_rows = __extract_df(storage=etalon_samples, doc_id=doc_id, ctx_id=ctx_id,
+        sample_rows = __extract_df(df=etalon_samples_df, doc_id=doc_id, ctx_id=ctx_id,
                                    source_ind=source_ind, target_ind=target_ind)
 
         if len(sample_rows) == 0:
-            sample_rows = __extract_df(storage=test_samples, doc_id=doc_id, ctx_id=ctx_id,
+            sample_rows = __extract_df(df=test_samples_df, doc_id=doc_id, ctx_id=ctx_id,
                                        source_ind=source_ind, target_ind=target_ind)
 
         # Извлекаем первый ряд.
